@@ -8,10 +8,6 @@ export const createContact = async(req, res) => {
 
         const {fullName, position, email, phone, linkedin, isPrimary, notes} = req.body
 
-        if(!fullName || !position || !email || !phone) {
-            return res.status(400).json({message: "Los parametros son requeridos"})
-        }
-
         const existingContact = await Contact.findOne({ email })
 
         if (existingContact) {

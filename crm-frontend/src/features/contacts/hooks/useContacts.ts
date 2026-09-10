@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getContacts, createContact as createContactService, updateContact as updateContactService } from "../services/contactService";
+import { getContacts, createContact as createContactService, updateContact as updateContactService, deleteContact as deleteContactService } from "../services/contactService";
 
 import type { Contact, CreateContactData, UpdateContactData } from "../types/contact.types";
 
@@ -79,8 +79,21 @@ export function useContacts(companyId: string | null) {
             )
         );
 
-        return updateContact;
+        return updatedContact;
 
+    };
+
+    const deleteContact = async (contactId: string) => {
+
+        if (!companyId) {
+            throw new Error( "No existe un Business seleccionado" );
+        }
+
+        await deleteContactService(companyId, contactId);
+
+        setContacts((currentContacts) =>
+            currentContacts.filter((contact) => contact._id !== contactId)
+        );
     };
 
     return {
@@ -88,6 +101,7 @@ export function useContacts(companyId: string | null) {
         loading,
         error,
         createContact,
-        updateContact    
+        updateContact,
+        deleteContact
     }
 }

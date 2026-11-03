@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 
+import { SERVICE_LINES } from "../config/serviceLines.js";
+
 const companySchema = new mongoose.Schema ({
-    business:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Business",
-        required:true
-    },
 
     name: {type: String, required: true},
     website: {type: String, required: true},
     companySize: {type: String, required: true},
     leadSource: {type: String},
+
+    // Una empresa puede trabajarse en una o varias líneas de servicio.
+    // Reemplaza al antiguo scoping por "negocio".
+    lines: [{
+        type: String,
+        enum: SERVICE_LINES
+    }],
 
     status: {
         type:String,

@@ -1,110 +1,64 @@
 import ServiceTemplate from "../models/servicetemplate.model.js"
-import Business from "../models/business.model.js"
 
-export const createServiceTemplate = async (req,res) => {
+export const createServiceTemplate = async (req, res) => {
     try {
 
-        const { businessId } = req.params;
+        const { name, description, active, line, phases, deliverables, expectedEvidence, projectStructure, estimatedDuration, kpis } = req.body;
 
-        const { name, description, active, phases, deliverables, expectedEvidence, projectStructure, estimatedDuration, kpis} = req.body;
+        const existingServiceTemplate = await ServiceTemplate.findOne({ name });
 
-        const business = await Business.findById(businessId);
-
-        if(!business) {
-            return res.status(404).json({ message: "Business no encontrado"})
+        if (existingServiceTemplate) {
+            return res.status(409).json({ message: "El template ya existe" });
         }
 
-        const existingServiceTemplate = await ServiceTemplate.findOne({ name })
+        const serviceTemplate = await ServiceTemplate.create({
+            name, description, active, line,
+            phases, deliverables, expectedEvidence, projectStructure, estimatedDuration, kpis
+        });
 
-        if(existingServiceTemplate) {
-            return res.status(409).json({ message: "El template ya existe"})
-        }
-
-        const serviceTemplate = new ServiceTemplate({
-            business: businessId,
-            name,
-            description,
-            active,
-            phases,
-            deliverables,
-            expectedEvidence,
-            projectStructure,
-            estimatedDuration,
-            kpis
-        })
-
-        await serviceTemplate.save();
-
-        res.status(201).json({
+        return res.status(201).json({
             message: "Template creado con exito",
             serviceTemplate
         });
 
     } catch (error) {
-       
-        console.error(error)
-
-        return res.status(500).json({message: "Error al crear el template"})
+        console.error(error);
+        return res.status(500).json({ message: "Error al crear el template" });
     }
-}
+};
 
 export const getServiceTemplates = async (req, res) => {
     try {
 
-        const { businessId } = req.params;
+        // Filtro opcional por línea: ?line=Concientización
+        const { line } = req.query;
+        const filter = line ? { line } : {};
 
-        const business = await Business.findById(businessId);
+        const serviceTemplates = await ServiceTemplate.find(filter).sort({ createdAt: -1 });
 
-        if (!business) {
-            return res.status(404).json({
-                message: "Business no encontrado"
-            });
-        }
-
-        const serviceTemplates = await ServiceTemplate.find({
-            business: businessId
-        }).sort({ createdAt: -1 });
-
-        return res.status(200).json({
-            serviceTemplates
-        });
+        return res.status(200).json({ serviceTemplates });
 
     } catch (error) {
-
         console.error(error);
-
-        return res.status(500).json({
-            message: "Error al obtener los templates"
-        });
+        return res.status(500).json({ message: "Error al obtener los templates" });
     }
 };
 
 export const getServiceTemplate = async (req, res) => {
     try {
 
-        const { businessId, serviceTemplateId } = req.params;
+        const { serviceTemplateId } = req.params;
 
-        const serviceTemplate = await ServiceTemplate.findOne({
-            _id: serviceTemplateId,
-            business: businessId
-        });
+        const serviceTemplate = await ServiceTemplate.findById(serviceTemplateId);
 
         if (!serviceTemplate) {
-            return res.status(404).json({
-                message: "Template no encontrado"
-            });
+            return res.status(404).json({ message: "Template no encontrado" });
         }
 
-        return res.status(200).json({
-            serviceTemplate
-        });
+        return res.status(200).json({ serviceTemplate });
 
     } catch (error) {
-
         console.error(error);
-
-        return res.status(500).json({
-            message: "Error al obtener el template"
-        });
+        return res.status(500).json({ message: "Error al obtener el template" });
     }
 };

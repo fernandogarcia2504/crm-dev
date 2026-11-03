@@ -16,7 +16,7 @@ export default function CompanyActivitiesPage() {
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full flex flex-col pb-12">
 
             {loading && (
-                <p className="mt-12 text-[#959595]">Cargando actividades...</p>
+                <p className="mt-12 text-[#9aa3b2]">Cargando actividades...</p>
             )}
 
             {error && (
@@ -24,12 +24,12 @@ export default function CompanyActivitiesPage() {
             )}
 
             {!loading && !error && opportunities.length === 0 && (
-                <p className="mt-12 text-[#959595]">No hay oportunidades registradas para esta empresa.</p>
+                <p className="mt-12 text-[#9aa3b2]">No hay oportunidades registradas para esta empresa.</p>
             )}
 
             <div className="w-full flex flex-col gap-10 mt-12">
                 {!loading && !error && opportunities.map((opportunity) => (
-                    <div key={opportunity._id} className="w-full flex flex-col rounded-lg shadow-lg bg-[#171717] px-4 py-5">
+                    <div key={opportunity._id} className="w-full flex flex-col rounded-lg shadow-lg bg-[#15171c] px-4 py-5">
                         <OpportunityActivity
                             opportunity={opportunity}
                             onOpportunityUpdate={syncOpportunity}

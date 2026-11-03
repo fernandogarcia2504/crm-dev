@@ -4,7 +4,7 @@ import { getTemplate } from "../services/templateServices";
 
 import type { ServiceTemplate } from "../types/templates.types";
 
-export function useTemplate(businessId: string | null, templateId: string | null) {
+export function useTemplate(templateId: string | null) {
 
     const [template, setTemplate] = useState<ServiceTemplate | null>(null);
     const [loading, setLoading] = useState(false);
@@ -12,44 +12,27 @@ export function useTemplate(businessId: string | null, templateId: string | null
 
     useEffect(() => {
 
-        if (!businessId || !templateId) {
+        if (!templateId) {
             setTemplate(null);
             return;
         }
 
         const fetchTemplate = async () => {
             try {
-
                 setLoading(true);
                 setError(null);
-
-                const data = await getTemplate(businessId, templateId);
-
-                setTemplate(data);
-
+                setTemplate(await getTemplate(templateId));
             } catch (error) {
-
                 console.error(error);
-
-                setError(
-                    error instanceof Error ? error.message : "Error al obtener el template"
-                );
-
+                setError(error instanceof Error ? error.message : "Error al obtener el template");
             } finally {
-
                 setLoading(false);
-
             }
         };
 
         fetchTemplate();
 
-    }, [businessId, templateId]);
+    }, [templateId]);
 
-    return {
-        template,
-        loading,
-        error
-    };
-
+    return { template, loading, error };
 }

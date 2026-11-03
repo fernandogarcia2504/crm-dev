@@ -31,7 +31,7 @@ export default function ContactPopup({onClose, createContact, companies, loading
     
     const [selectedCompanyId, setSelectedCompanyId] = useState("");
 
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +79,7 @@ export default function ContactPopup({onClose, createContact, companies, loading
     }
     
     return(
-        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#1A1A1A] flex flex-col p-4 gap-6">
+        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#15171c] flex flex-col p-4 gap-6">
 
             <button type="button" onClick={onClose}> <X size={14} /></button>
 
@@ -97,7 +97,7 @@ export default function ContactPopup({onClose, createContact, companies, loading
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Selecciona una empresa</p>
                 <select value={selectedCompanyId} onChange={(e) => setSelectedCompanyId(e.target.value)} disabled={loadingCompanies} required
-                    className="w-full rounded-md px-3 py-2 bg-[#212121] text-[#ECECEC] placeholder:text-sm" >
+                    className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee] placeholder:text-sm" >
                     <option value=""> {loadingCompanies ? "Cargando empresas..." : "Selecciona una empresa" } </option>
 
                     {companies.map((company) => (
@@ -112,33 +112,33 @@ export default function ContactPopup({onClose, createContact, companies, loading
             </div>
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Nombre completo del contacto</p>
-                <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el nombre del contacto..." />
+                <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el nombre del contacto..." />
             </div>
 
             <div className="w-full flex gap-3">
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Puesto en la empresa</p>
-                    <input type="text" name="position" value={formData.position} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el puesto del contacto..." />
+                    <input type="text" name="position" value={formData.position} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el puesto del contacto..." />
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Número de teléfono</p>
-                    <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el teléfono del contacto..." />
+                    <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el teléfono del contacto..." />
                 </div>
             </div>
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Correo electrónico</p>
-                <input type="text" name="email" value={formData.email} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el correo electrónico del contacto..." />
+                <input type="text" name="email" value={formData.email} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el correo electrónico del contacto..." />
             </div>
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">LinkedIn</p>
-                <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el link de LinkedIn..." />
+                <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el link de LinkedIn..." />
             </div>
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Notas</p>
-                <input type="text" name="notes" value={formData.notes} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el notas sobre el contacto..." />
+                <input type="text" name="notes" value={formData.notes} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el notas sobre el contacto..." />
             </div>
 
             <div className="flex gap-3">
@@ -147,7 +147,7 @@ export default function ContactPopup({onClose, createContact, companies, loading
             </div>
 
             <div className="flex justify-center">
-                <button className="w-[40%] bg-[#2F76D2] rounded-md px-2 py-1">Crear contacto</button>
+                <button className="w-[40%] bg-[#5b74ff] rounded-md px-2 py-1">Crear contacto</button>
             </div>
         </form>
     )

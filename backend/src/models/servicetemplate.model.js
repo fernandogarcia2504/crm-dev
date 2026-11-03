@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
 
+import { SERVICE_LINES } from "../config/serviceLines.js";
+
 const ServiceTemplateSchema = new mongoose.Schema ({
 
-    business:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Business"
+    // Línea de servicio a la que aplica esta plantilla (opcional).
+    line: {
+        type: String,
+        enum: SERVICE_LINES
     },
 
     name: String,

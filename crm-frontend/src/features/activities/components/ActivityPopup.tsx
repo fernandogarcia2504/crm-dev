@@ -96,7 +96,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
 
     return (
-        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[40%] max-h-[90vh] overflow-y-auto bg-[#1A1A1A] flex flex-col p-4 gap-6">
+        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[40%] max-h-[90vh] overflow-y-auto bg-[#15171c] flex flex-col p-4 gap-6">
 
             <button type="button" onClick={onClose}><X size={14} /></button>
             <div className="flex gap-2 items-center">
@@ -112,7 +112,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Tipo</p>
-                <select name="type" value={formData.type} onChange={handleChange} required className="w-full rounded-md px-3 py-2 bg-[#212121] text-[#ECECEC]">
+                <select name="type" value={formData.type} onChange={handleChange} required className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee]">
                     <option value="Correo">Correo</option>
                     <option value="Llamada">Llamada</option>
                     <option value="WhatsApp">WhatsApp</option>
@@ -132,7 +132,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                     value={formData.title}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
+                    className="w-full rounded-md px-3 py-2 bg-[#1b1e24] placeholder:text-sm"
                     placeholder="Ingresa el título de la actividad..."
                 />
             </div>
@@ -143,7 +143,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    className="w-full h-24 rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm resize-none"
+                    className="w-full h-24 rounded-md px-3 py-2 bg-[#1b1e24] placeholder:text-sm resize-none"
                     placeholder="Ingresa una nota..."
                 />
             </div>
@@ -158,7 +158,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                     name="nextStep"
                     value={formData.nextStep}
                     onChange={handleChange}
-                    className="w-full h-24 rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm resize-none"
+                    className="w-full h-24 rounded-md px-3 py-2 bg-[#1b1e24] placeholder:text-sm resize-none"
                     placeholder="Ingresa los próximos pasos a realizar..."
                 />
 
@@ -178,7 +178,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                     name="result"
                     value={formData.result}
                     onChange={handleChange}
-                    className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
+                    className="w-full rounded-md px-3 py-2 bg-[#1b1e24] placeholder:text-sm"
                     placeholder="¿Cuál fue el resultado de la actividad?"
                 />
 
@@ -200,7 +200,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                         name="scheduledDate"
                         value={formData.scheduledDate}
                         onChange={handleChange}
-                        className="w-full rounded-md px-3 py-2 bg-[#212121]"
+                        className="w-full rounded-md px-3 py-2 bg-[#1b1e24]"
                     />
 
                 </div>
@@ -217,7 +217,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                         name="date"
                         value={formData.date}
                         onChange={handleChange}
-                        className="w-full rounded-md px-3 py-2 bg-[#212121]"
+                        className="w-full rounded-md px-3 py-2 bg-[#1b1e24]"
                     />
 
                 </div>
@@ -227,7 +227,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
             {/* Separador */}
 
-            <div className="border-b border-[#333333]" />
+            <div className="border-b border-[#2f343e]" />
 
 
             {/* Actualizar oportunidad */}
@@ -243,7 +243,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
                 <div className="w-full flex flex-col gap-3">
 
-                    <p className="text-sm text-[#959595]">
+                    <p className="text-sm text-[#9aa3b2]">
                         Nueva etapa
                     </p>
 
@@ -254,7 +254,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                                 e.target.value as typeof stage
                             )
                         }
-                        className="w-full rounded-md px-3 py-2 bg-[#212121] text-[#ECECEC]"
+                        className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee]"
                     >
 
                         <option value="">
@@ -294,7 +294,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
                 <div className="w-full flex flex-col gap-3">
 
-                    <p className="text-sm text-[#959595]">
+                    <p className="text-sm text-[#9aa3b2]">
                         Probabilidad
                     </p>
 
@@ -306,7 +306,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                         onChange={(e) =>
                             setProbability(e.target.value)
                         }
-                        className="w-full rounded-md px-3 py-2 bg-[#212121]"
+                        className="w-full rounded-md px-3 py-2 bg-[#1b1e24]"
                         placeholder="Ej. 75"
                     />
 
@@ -317,7 +317,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
                 <div className="w-full flex flex-col gap-3">
 
-                    <p className="text-sm text-[#959595]">
+                    <p className="text-sm text-[#9aa3b2]">
                         Próxima acción
                     </p>
 
@@ -327,7 +327,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                         onChange={(e) =>
                             setNextAction(e.target.value)
                         }
-                        className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
+                        className="w-full rounded-md px-3 py-2 bg-[#1b1e24] placeholder:text-sm"
                         placeholder="Ingresa la próxima acción..."
                     />
 
@@ -338,7 +338,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
                 <div className="w-full flex flex-col gap-3">
 
-                    <p className="text-sm text-[#959595]">
+                    <p className="text-sm text-[#9aa3b2]">
                         Fecha de próxima acción
                     </p>
 
@@ -348,7 +348,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                         onChange={(e) =>
                             setNextActionDate(e.target.value)
                         }
-                        className="w-full rounded-md px-3 py-2 bg-[#212121]"
+                        className="w-full rounded-md px-3 py-2 bg-[#1b1e24]"
                     />
 
                 </div>
@@ -360,11 +360,11 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
 
             {stage === "Ganado" && (
 
-                <div className="rounded-md bg-[#212121] p-3">
+                <div className="rounded-md bg-[#1b1e24] p-3">
 
-                    <p className="text-sm text-[#959595]">
+                    <p className="text-sm text-[#9aa3b2]">
                         Al marcar la oportunidad como
-                        <span className="text-[#ECECEC]">
+                        <span className="text-[#e7e9ee]">
                             {" "}Ganado
                         </span>
                         , el backend creará automáticamente
@@ -384,7 +384,7 @@ export default function ActivityPopup({ onClose, createActivity}: ActivityPopupP
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-1/2 bg-[#2F76D2] rounded-md px-2 py-2 disabled:opacity-50"
+                    className="w-1/2 bg-[#5b74ff] rounded-md px-2 py-2 disabled:opacity-50"
                 >
 
                     {loading

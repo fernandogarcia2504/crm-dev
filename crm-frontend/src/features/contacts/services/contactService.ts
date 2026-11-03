@@ -2,11 +2,11 @@ import type { Contact, CreateContactData, UpdateContactData, GetContactResponse,
 
 const API_URL = "http://localhost:3000/api/contacts";
 
-export const getAllContacts = async(businessId: string): Promise<Contact[]> => {
+export const getAllContacts = async(): Promise<Contact[]> => {
 
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${API_URL}/?businessId=${businessId}`, {
+    const response = await fetch(`${API_URL}/`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }

@@ -80,7 +80,7 @@ export default function DocumentsPopup({ onClose, uploadDocument }: DocumentsPop
     };
 
     return(
-        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#1A1A1A]  flex flex-col p-4 gap-6">
+        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#15171c]  flex flex-col p-4 gap-6">
 
             <button type="button" onClick={onClose}> <X size={14} /></button>
 
@@ -97,7 +97,7 @@ export default function DocumentsPopup({ onClose, uploadDocument }: DocumentsPop
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Categoría</p>
-                <select value={category} onChange={(e) => setCategory(e.target.value as DocumentCategory)} className="w-full rounded-md px-3 py-2 bg-[#212121] text-[#ECECEC]">
+                <select value={category} onChange={(e) => setCategory(e.target.value as DocumentCategory)} className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee]">
                     {CATEGORIES.map((option) => (
                         <option key={option} value={option}>{option}</option>
                     ))}
@@ -106,7 +106,7 @@ export default function DocumentsPopup({ onClose, uploadDocument }: DocumentsPop
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Nota</p>
-                <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa una nota..." />
+                <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa una nota..." />
             </div>
 
             <input
@@ -124,23 +124,23 @@ export default function DocumentsPopup({ onClose, uploadDocument }: DocumentsPop
                 }}
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={handleDrop}
-                className={`w-full flex flex-col items-center justify-center rounded-md bg-[#212121] border border-dashed py-8 cursor-pointer transition-colors ${isDragging ? "border-[#2F76D2]" : "border-gray-500"}`}
+                className={`w-full flex flex-col items-center justify-center rounded-md bg-[#1b1e24] border border-dashed py-8 cursor-pointer transition-colors ${isDragging ? "border-[#5b74ff]" : "border-gray-500"}`}
             >
                 <FileUp />
 
                 {file ? (
-                    <p className="text-[#ECECEC] mt-2">{file.name}</p>
+                    <p className="text-[#e7e9ee] mt-2">{file.name}</p>
                 ) : (
                     <>
-                        <p className='text-[#959595] mt-2'>Arrastra y suelta</p>
-                        <p className='text-[#959595]'>o</p>
-                        <p className='text-[#2F76D2]'>Explorar archivos</p>
+                        <p className='text-[#9aa3b2] mt-2'>Arrastra y suelta</p>
+                        <p className='text-[#9aa3b2]'>o</p>
+                        <p className='text-[#5b74ff]'>Explorar archivos</p>
                     </>
                 )}
             </div>
 
             <div className="flex justify-center">
-                <button type="submit" disabled={loading} className="w-1/3 bg-[#2F76D2] hover:bg-[#3D83E0] hover:shadow-lg hover:border-[#3A3A3A] rounded-md px-2 py-1 transition duration-300">
+                <button type="submit" disabled={loading} className="w-1/3 bg-[#5b74ff] hover:bg-[#5b74ff] hover:shadow-lg hover:border-[#2f343e] rounded-md px-2 py-1 transition duration-300">
                     {loading ? "Subiendo..." : "Subir archivo"}
                 </button>
             </div>

@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
 
-const ProjectSchema = new mongoose.Schema ({
+import { SERVICE_LINES } from "../config/serviceLines.js";
 
-    business:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Business"
-    },
+const ProjectSchema = new mongoose.Schema ({
 
     company:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Company"
+    },
+
+    // Línea de servicio del proyecto (hereda de la oportunidad).
+    line: {
+        type: String,
+        enum: SERVICE_LINES
     },
 
     opportunity:{
@@ -35,7 +38,7 @@ const ProjectSchema = new mongoose.Schema ({
         default:"Planeacion"
     },
 
-    manager: String, 
+    manager: String,
 
     startDate: Date,
 
@@ -43,74 +46,16 @@ const ProjectSchema = new mongoose.Schema ({
 
     deliveryDate: Date,
 
-    scope:{
-
-        domains:[String],
-
-        subdomains:[String],
-
-        ips:[String],
-
-        applications:[String],
-
-        apis:[String],
-
-        exclusions:[String],
-
-        allowedHours:String,
-
-        technicalContact:String
-
-    },
-
-    assets:[{
-
-        name:String,
-
-        ip:String,
-
-        hostname:String,
-
-        type:String,
-
-        operatingSystem:String,
-
-        criticality:String,
-
-        comments:String
-
-    }],
-
-    phases:[{
-
-        name:String,
-
-        order:Number,
-
-        status:String,
-
-        startedAt:Date,
-
-        finishedAt:Date,
-
-        checklist:[{
-
-            task:String,
-
-            status:{
-                type:String,
-                enum:["Pendiente","En progreso","Completado"],
-                default:"Pendiente"
-            },
-
-            completed:Boolean,
-
-            completedAt:Date
-
-        }]
-
-    }],
-
+    // NOTA DE ARQUITECTURA (separacion CRM / atalaya-platform)
+    // ------------------------------------------------------------------
+    // Lo OPERATIVO del proyecto -- scope tecnico (dominios, subdominios,
+    // ips, aplicaciones, apis, exclusiones, ventanas), inventario de
+    // assets y las fases/checklist de ejecucion -- se movio a
+    // atalaya-platform, donde cada linea de negocio corre su propia
+    // operacion. Alla el registro de ejecucion referencia este proyecto
+    // por su _id (projectId). El CRM conserva el proyecto SOLO como
+    // registro comercial de la gestion: estado, responsable, fechas,
+    // entregables y bitacora.
     deliverables:[{
 
         name:String,

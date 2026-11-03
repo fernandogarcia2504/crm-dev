@@ -11,7 +11,7 @@ import type {
 } from "../types/contact.types";
 
 
-export function useAllContacts(businessId: string | null) {
+export function useAllContacts() {
 
     const [contacts, setContacts] = useState<Contact[]>([]);
     const [loading, setLoading] = useState(false);
@@ -20,11 +20,6 @@ export function useAllContacts(businessId: string | null) {
 
     useEffect(() => {
 
-        if (!businessId) {
-            setContacts([]);
-            return;
-        }
-
         const fetchContacts = async () => {
 
             try {
@@ -32,9 +27,7 @@ export function useAllContacts(businessId: string | null) {
                 setLoading(true);
                 setError(null);
 
-                const data = await getAllContacts(businessId);
-
-                setContacts(data);
+                setContacts(await getAllContacts());
 
             } catch (error) {
 
@@ -55,7 +48,7 @@ export function useAllContacts(businessId: string | null) {
 
         fetchContacts();
 
-    }, [businessId]);
+    }, []);
 
 
     const createContact = async (

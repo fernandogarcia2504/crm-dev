@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { getProject, updateTaskStatus as updateTaskStatusService } from "../services/projectService";
+import { getProject } from "../services/projectService";
 
-import type { Project, TaskStatus } from "../types/project.types";
+import type { Project } from "../types/project.types";
 
 export function useProject(companyId: string | null, projectId: string | null) {
 
@@ -45,65 +45,10 @@ export function useProject(companyId: string | null, projectId: string | null) {
 
     }, [companyId, projectId]);
 
-    const updateTaskStatus = async (phaseId: string, taskId: string, status: TaskStatus) => {
-
-        if (!companyId || !projectId) {
-            throw new Error("No existe un proyecto seleccionado");
-        }
-
-        // Actualizacion optimista: la tarea se mueve de inmediato en el
-        // tablero y se confirma (o revierte) con la respuesta del backend.
-        const previousProject = project;
-
-        setProject((currentProject) => {
-
-            if (!currentProject) return currentProject;
-
-            return {
-                ...currentProject,
-                phases: currentProject.phases.map((phase) =>
-                    phase._id === phaseId
-                        ? {
-                            ...phase,
-                            checklist: phase.checklist.map((task) =>
-                                task._id === taskId
-                                    ? { ...task, status, completed: status === "Completado" }
-                                    : task
-                            )
-                        }
-                        : phase
-                )
-            };
-        });
-
-        try {
-
-            const updatedProject = await updateTaskStatusService(
-                companyId,
-                projectId,
-                phaseId,
-                taskId,
-                status
-            );
-
-            setProject(updatedProject);
-
-            return updatedProject;
-
-        } catch (error) {
-
-            setProject(previousProject);
-
-            throw error;
-
-        }
-    };
-
     return {
         project,
         loading,
-        error,
-        updateTaskStatus
+        error
     };
 
 }

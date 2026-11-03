@@ -10,9 +10,7 @@ import { useTemplates } from "../hooks/useTemplates";
 
 export default function TemplatesPage() {
 
-    const businessId = localStorage.getItem("businessId");
-
-    const {templates, loading, error, createTemplate} = useTemplates(businessId) 
+    const {templates, loading, error, createTemplate} = useTemplates()
     const [isOpenPopup, setIsOpenPopup] = useState(false);
 
     return(
@@ -24,7 +22,7 @@ export default function TemplatesPage() {
             <div className="w-full grid grid-cols-3 gap-12 mt-12">
 
                 {loading && (
-                    <p className="mt-8 text-[#959595]">
+                    <p className="mt-8 text-[#9aa3b2]">
                         Cargando empresas...
                     </p>
                 )}

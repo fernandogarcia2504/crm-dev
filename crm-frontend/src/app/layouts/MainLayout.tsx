@@ -1,29 +1,17 @@
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-import CompanyNavbar from "../../components/layout/CompanyNavbar";
-import ProjectNavbar from "../../components/layout/ProjectNavbar";
+import Sidebar from "../../components/layout/Sidebar";
 
 export default function MainLayout() {
-
-    const location = useLocation();
-    const { companyId, projectId } = useParams();
-
-    const isIndividualCompanyRoute = Boolean(companyId);
-
-    const hideNavbar =
-        Boolean(projectId) ||
-        location.pathname.endsWith("/entrepeneurship");
-
     return (
-        <div className="bg-[#141414] w-full min-h-screen text-[#ECECEC] flex flex-col items-center">
+        <div className="flex min-h-screen w-full bg-canvas text-ink">
+            <Sidebar />
 
-            {!hideNavbar && (
-                isIndividualCompanyRoute ? <ProjectNavbar /> : <CompanyNavbar />)}
-
-            <main className="w-[80%]">
-                <Outlet />
+            <main className="flex-1 overflow-x-hidden">
+                <div className="mx-auto w-full max-w-[1180px] px-6 pb-16 md:px-10">
+                    <Outlet />
+                </div>
             </main>
-
         </div>
     );
 }

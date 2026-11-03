@@ -28,9 +28,9 @@ export default function GraphCard() {
 
     return(
         <motion.div
-            whileHover={{ backgroundColor: "#242424" }}
+            whileHover={{ backgroundColor: "#1b1e24" }}
             transition={{ duration: 0.2 }}
-            className="flex flex-col w-[60%] bg-[#1A1A1A] mt-8 px-3 py-2 gap-3 rounded-md shadow-lg"
+            className="flex flex-col w-[60%] bg-[#15171c] mt-8 px-3 py-2 gap-3 rounded-md shadow-lg"
         >
             <p className="text-sm font-bold">
                 Facturación acumulada vs objetivo anual
@@ -48,22 +48,22 @@ export default function GraphCard() {
                         }}
                     >
                         <CartesianGrid
-                            stroke="#333333"
+                            stroke="#2f343e"
                             strokeDasharray="3 3"
                         />
 
                         <XAxis
                             dataKey="month"
-                            stroke="#959595"
-                            tick={{ fill: "#959595", fontSize: 12 }}
+                            stroke="#9aa3b2"
+                            tick={{ fill: "#9aa3b2", fontSize: 12 }}
                             axisLine={false}
                             tickLine={false}
                         />
 
                         <YAxis
                             domain={[0, 1000000]}
-                            stroke="#959595"
-                            tick={{ fill: "#959595", fontSize: 12 }}
+                            stroke="#9aa3b2"
+                            tick={{ fill: "#9aa3b2", fontSize: 12 }}
                             axisLine={false}
                             tickLine={false}
                             tickFormatter={(value) =>
@@ -73,12 +73,12 @@ export default function GraphCard() {
 
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: "#212121",
-                                border: "1px solid #333333",
+                                backgroundColor: "#1b1e24",
+                                border: "1px solid #2f343e",
                                 borderRadius: "6px",
                             }}
                             labelStyle={{
-                                color: "#ECECEC",
+                                color: "#e7e9ee",
                             }}
                             formatter={(value) =>
                                 `$${Number(value).toLocaleString("es-MX")}`
@@ -88,7 +88,7 @@ export default function GraphCard() {
                         <Line
                             type="monotone"
                             dataKey="facturacion"
-                            stroke="#2F76D2"
+                            stroke="#5b74ff"
                             strokeWidth={2}
                             dot={false}
                             activeDot={{ r: 5 }}
@@ -97,7 +97,7 @@ export default function GraphCard() {
                         <Line
                             type="monotone"
                             dataKey="objetivo"
-                            stroke="#959595"
+                            stroke="#9aa3b2"
                             strokeWidth={2}
                             strokeDasharray="6 6"
                             dot={false}

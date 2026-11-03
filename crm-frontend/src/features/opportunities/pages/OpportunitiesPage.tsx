@@ -24,7 +24,7 @@ export default function OpportunitiesPage() {
             </div>
 
             {loading && (
-                <p className="mt-8 text-[#959595]"> Cargando oportunidades...</p>
+                <p className="mt-8 text-[#9aa3b2]"> Cargando oportunidades...</p>
             )}
 
             {error && (
@@ -32,7 +32,7 @@ export default function OpportunitiesPage() {
             )}
 
             {!loading && !error && opportunities.length === 0 && (
-                <p className="mt-8 text-[#959595]">No hay oportunidades registradas.</p>
+                <p className="mt-8 text-[#9aa3b2]">No hay oportunidades registradas.</p>
             )}
 
             <div className="w-full grid grid-cols-3 gap-12 mt-12">

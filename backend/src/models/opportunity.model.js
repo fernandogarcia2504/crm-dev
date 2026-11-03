@@ -1,11 +1,8 @@
 import mongoose from "mongoose";
 
+import { SERVICE_LINES } from "../config/serviceLines.js";
+
 const OpportunitySchema = new mongoose.Schema ({
-    business: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Business",
-        required: true
-    },
 
     company: {
         type: mongoose.Schema.Types.ObjectId,
@@ -13,10 +10,15 @@ const OpportunitySchema = new mongoose.Schema ({
         required: true
     },
 
+    // Línea de servicio a la que pertenece la oportunidad.
+    line: {
+        type: String,
+        enum: SERVICE_LINES
+    },
+
     serviceTemplate: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "ServiceTemplate",
-        required: true
+        ref: "ServiceTemplate"
     },
 
     title: String,

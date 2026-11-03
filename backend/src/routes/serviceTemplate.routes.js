@@ -4,10 +4,10 @@ import { createServiceTemplate, getServiceTemplate, getServiceTemplates } from "
 
 const router = express.Router();
 
-router.post("/:businessId", createServiceTemplate);
+router.post("/", createServiceTemplate);
 
-router.get("/:businessId", getServiceTemplates)
+router.get("/", getServiceTemplates);
 
-router.get("/:businessId/templates/:serviceTemplateId", getServiceTemplate)
+router.get("/:serviceTemplateId", getServiceTemplate);
 
 export default router;

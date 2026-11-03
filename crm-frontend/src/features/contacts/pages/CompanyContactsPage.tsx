@@ -46,16 +46,16 @@ export default function CompanyContactsPage() {
             </div>
 
             <div className="w-full grid grid-cols-[18%_18%_18%_26%_10%_10%] pt-8">
-                <p className="text-[#959595]">Nombre</p>
-                <p className="text-[#959595]">Puesto</p>
-                <p className="text-[#959595]">Teléfono</p>
-                <p className="text-[#959595]">Correo electrónico</p>
-                <p className="text-[#959595] text-right">Principal</p>
-                <p className="text-[#959595] text-right">Acciones</p>
+                <p className="text-[#9aa3b2]">Nombre</p>
+                <p className="text-[#9aa3b2]">Puesto</p>
+                <p className="text-[#9aa3b2]">Teléfono</p>
+                <p className="text-[#9aa3b2]">Correo electrónico</p>
+                <p className="text-[#9aa3b2] text-right">Principal</p>
+                <p className="text-[#9aa3b2] text-right">Acciones</p>
             </div>
 
             {loading && (
-                <p className="mt-8 text-[#959595]">
+                <p className="mt-8 text-[#9aa3b2]">
                     Cargando contactos...
                 </p>
             )}

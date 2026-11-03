@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 
 import ProtectedRoute from "./ProtectedRoute";
 import MainLayout from "../layouts/MainLayout";
@@ -6,9 +6,11 @@ import AuthLayout from "../layouts/AuthLayout";
 
 import LoginPage from "../../features/auth/LoginPage";
 
-import EntrepeneurshipPage from "../../features/entrepeneurship/EntrepeneurshipPage";
+import DashboardPage from "../../features/dashboard/DashboardPage";
+import PipelinePage from "../../features/opportunities/PipelinePage";
 
 import CompanyPage from "../../features/companies/pages/CompanyPage";
+import CompanyOverviewPage from "../../features/companies/pages/CompanyOverviewPage";
 import Finances from "../../features/finances/pages/FinancesPage";
 import ContactsPage from "../../features/contacts/pages/ContactsPage";
 import TemplatesPage from "../../features/templates/pages/TemplatesPage";
@@ -21,53 +23,43 @@ import CompanyActivitiesPage from "../../features/activities/pages/CompanyActivi
 import OpportunitiesPage from "../../features/opportunities/pages/OpportunitiesPage";
 import CompanyContactsPage from "../../features/contacts/pages/CompanyContactsPage";
 
-import CompanyEmployeesPage from "../../features/employees/pages/CompanyEmployeesPage";
-import CompanyGradesPage from "../../features/employees/pages/CompanyGradesPage";
-import ProjectCampaignsPage from "../../features/phishing/pages/ProjectCampaignsPage";
-import CampaignPage from "../../features/phishing/pages/CampaignPage";
-import CoursePage from "../../features/courses/pages/CoursePage";
-
 import { AuthProvider } from "../context/AuthContext";
-import { BusinessProvider } from "../context/BusinessContext";
 
+// CRM unificado: un solo espacio, sin "negocio". La línea de servicio es
+// una etiqueta sobre empresa/oportunidad/proyecto. La operación por línea
+// vive en atalaya-platform.
 export default function AppRouter() {
     return (
         <AuthProvider>
-            <BusinessProvider >
-                <BrowserRouter>
-                    <Routes>
-                        <Route element={<AuthLayout />}>
-                            <Route path="/" element={<LoginPage />} />
+            <BrowserRouter>
+                <Routes>
+                    <Route element={<AuthLayout />}>
+                        <Route path="/" element={<LoginPage />} />
+                    </Route>
+                    <Route element={<ProtectedRoute />}>
+                        <Route element={<MainLayout />}>
+                            <Route path="/inicio" element={<DashboardPage />} />
+                            <Route path="/pipeline" element={<PipelinePage />} />
+
+                            <Route path="/companies" element={<CompanyPage />} />
+                            <Route path="/contacts" element={<ContactsPage />} />
+                            <Route path="/finances" element={<Finances />} />
+                            <Route path="/templates" element={<TemplatesPage />} />
+                            <Route path="/templates/:templateId" element={<TemplatePage />} />
+
+                            <Route path="/companies/:companyId" element={<CompanyOverviewPage />} />
+                            <Route path="/companies/:companyId/projects" element={<ProjectsPage />} />
+                            <Route path="/companies/:companyId/projects/:projectId" element={<ProjectPage />} />
+                            <Route path="/companies/:companyId/documents" element={<DocumentsPage />} />
+                            <Route path="/companies/:companyId/contacts" element={<CompanyContactsPage />} />
+                            <Route path="/companies/:companyId/activities" element={<CompanyActivitiesPage />} />
+                            <Route path="/companies/:companyId/opportunities" element={<OpportunitiesPage />} />
+
+                            <Route path="/app" element={<Navigate to="/inicio" replace />} />
                         </Route>
-                            <Route element={<ProtectedRoute />} >
-                                <Route element={<MainLayout />}>
-                                    <Route path="/entrepeneurship" element={<EntrepeneurshipPage />} />
-
-                                    <Route path="/entrepeneurship/companies" element={<CompanyPage />} />
-                                    <Route path="/entrepeneurship/finances" element={<Finances />} />
-                                    <Route path="/entrepeneurship/templates" element={<TemplatesPage />} />
-                                    <Route path="/entrepeneurship/templates/:templateId" element={<TemplatePage />} />
-                                    <Route path="/entrepeneurship/contacts" element={<ContactsPage />} />
-                                    <Route path="/entrepeneurship/course" element={<CoursePage />} />
-
-                                    <Route path="/entrepeneurship/:companyId/projects" element={<ProjectsPage />} />
-                                    <Route path="/entrepeneurship/:companyId/projects/:projectId" element={<ProjectPage />} />
-                                    <Route path="/entrepeneurship/:companyId/documents" element={<DocumentsPage />} />
-                                    <Route path="/entrepeneurship/:companyId/contacts" element={<CompanyContactsPage />} />
-                                    <Route path="/entrepeneurship/:companyId/activities" element={<CompanyActivitiesPage />} />
-                                    <Route path="/entrepeneurship/:companyId/opportunities" element={<OpportunitiesPage />} />
-
-                                    <Route path="/entrepeneurship/:companyId/employees" element={<CompanyEmployeesPage />} />
-                                    <Route path="/entrepeneurship/:companyId/grades" element={<CompanyGradesPage />} />
-                                    <Route path="/entrepeneurship/:companyId/projects/:projectId/campaigns" element={<ProjectCampaignsPage />} />
-                                    <Route path="/entrepeneurship/:companyId/projects/:projectId/campaigns/:campaignId" element={<CampaignPage />} />
-                                    
-                                </Route>
-                            </Route>
-                    </Routes>
-                </BrowserRouter>
-            </BusinessProvider>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
         </AuthProvider>
-
     )
 }

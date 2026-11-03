@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import { X, Target } from "lucide-react";
 
-import type { CreateOpportunityData } from "../types/opportunity.types";
+import type { CreateOpportunityData, ServiceLine } from "../types/opportunity.types";
 import { useTemplates } from "../../templates/hooks/useTemplates";
 
+const SERVICE_LINES: ServiceLine[] = ["Exposición", "Concientización", "Investigación y DD", "Riesgos"];
 
 interface OpportunityPopupProps {
     onClose: () => void;
@@ -16,13 +17,11 @@ interface OpportunityPopupProps {
 
 export default function OpportunityPopup({onClose, createOpportunity}: OpportunityPopupProps) {
 
-    const businessId = localStorage.getItem("businessId");
-
-    const { templates, loading: loadingTemplates } = useTemplates(businessId);
+    const { templates, loading: loadingTemplates } = useTemplates();
 
     const [formData, setFormData] =
         useState<CreateOpportunityData>({
-            businessId: businessId || "",
+            line: undefined,
             serviceTemplateId: "",
             title: "",
             stage: "Descubrimiento",
@@ -62,13 +61,8 @@ export default function OpportunityPopup({onClose, createOpportunity}: Opportuni
 
         e.preventDefault();
 
-        if (!businessId) {
-            setError("No existe un negocio seleccionado");
-            return;
-        }
-
-        if (!formData.serviceTemplateId) {
-            setError("Selecciona un Service Template");
+        if (!formData.line) {
+            setError("Selecciona una línea de servicio");
             return;
         }
 
@@ -92,7 +86,7 @@ export default function OpportunityPopup({onClose, createOpportunity}: Opportuni
 
 
     return(
-        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#1A1A1A] flex flex-col p-4 gap-6">
+        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#15171c] flex flex-col p-4 gap-6">
 
             <button onClick={onClose} type="button"> <X size={14} /></button>
 
@@ -110,12 +104,22 @@ export default function OpportunityPopup({onClose, createOpportunity}: Opportuni
             )}
 
             <div className="w-full flex flex-col gap-3">
-                <p className="text-sm">Servicio</p>
-                <select name="serviceTemplateId" value={formData.serviceTemplateId} onChange={handleChange} disabled={loadingTemplates} required className="w-full rounded-md px-3 py-2 bg-[#212121] text-[#ECECEC]">
+                <p className="text-sm">Línea de servicio</p>
+                <select name="line" value={formData.line ?? ""} onChange={handleChange} required className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee]">
+                    <option value="">Selecciona una línea</option>
+                    {SERVICE_LINES.map((line) => (
+                        <option key={line} value={line}>{line}</option>
+                    ))}
+                </select>
+            </div>
+
+            <div className="w-full flex flex-col gap-3">
+                <p className="text-sm">Servicio (opcional)</p>
+                <select name="serviceTemplateId" value={formData.serviceTemplateId} onChange={handleChange} disabled={loadingTemplates} className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee]">
                     <option value="">
                         {loadingTemplates
                             ? "Cargando servicios..."
-                            : "Selecciona un servicio"}
+                            : "Sin plantilla"}
                     </option>
 
                     {templates.map((template) => (
@@ -126,13 +130,13 @@ export default function OpportunityPopup({onClose, createOpportunity}: Opportuni
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Titulo de la oportunidad</p>
-                <input type="text" name="title" value={formData.title} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el nombre de la oportunidad"  />
+                <input type="text" name="title" value={formData.title} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el nombre de la oportunidad"  />
             </div>
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm"> Etapa </p>
 
-                <select name="stage" value={formData.stage} onChange={handleChange} className="w-full rounded-md px-3 py-2 bg-[#212121] text-[#ECECEC]" >
+                <select name="stage" value={formData.stage} onChange={handleChange} className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee]" >
 
                     <option value="Descubrimiento"> Descubrimiento </option>
                     <option value="Propuesta"> Propuesta </option>
@@ -145,7 +149,7 @@ export default function OpportunityPopup({onClose, createOpportunity}: Opportuni
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Prioridad</p>
-                <select name="priority" value={formData.priority} onChange={handleChange} className="w-full rounded-md px-3 py-2 bg-[#212121] text-[#ECECEC]">
+                <select name="priority" value={formData.priority} onChange={handleChange} className="w-full rounded-md px-3 py-2 bg-[#1b1e24] text-[#e7e9ee]">
                     <option value="Baja">Baja</option>
                     <option value="Media">Media</option>
                     <option value="Alta">Alta</option>
@@ -155,32 +159,32 @@ export default function OpportunityPopup({onClose, createOpportunity}: Opportuni
             <div className="w-full flex gap-3">
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Fecha tentativa inicio</p>
-                    <input type="date" name="expectedStartDate" value={formData.expectedStartDate} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" />
+                    <input type="date" name="expectedStartDate" value={formData.expectedStartDate} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" />
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Fecha tentativa cierre</p>
-                    <input type="date" name="estimatedCloseDate" value={formData.estimatedCloseDate} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" />
+                    <input type="date" name="estimatedCloseDate" value={formData.estimatedCloseDate} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" />
                 </div>
             </div>
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Notas</p>
-                <input type="text" name="notes" value={formData.notes} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa notas a considerar..." />
+                <input type="text" name="notes" value={formData.notes} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa notas a considerar..." />
             </div>
 
             <div className="w-full flex gap-3">
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Cantidad estimada</p>
-                    <input type="number" name="estimatedAmount" value={formData.estimatedAmount} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" />
+                    <input type="number" name="estimatedAmount" value={formData.estimatedAmount} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" />
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Probabilidad</p>
-                    <input type="number" name="probability" value={formData.probability} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" />
+                    <input type="number" name="probability" value={formData.probability} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" />
                 </div>
             </div>
 
             <div className="flex justify-center">
-                <button type="submit" disabled={loading} className="w-[45%] bg-[#2F76D2] rounded-md px-2 py-1">{loading ? "Creando...":"Crear oportunidad"}</button>
+                <button type="submit" disabled={loading} className="w-[45%] bg-[#5b74ff] rounded-md px-2 py-1">{loading ? "Creando...":"Crear oportunidad"}</button>
             </div>
 
         </form>

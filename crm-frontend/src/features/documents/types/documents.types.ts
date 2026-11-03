@@ -16,7 +16,6 @@ export type DocumentCategory =
 
 export interface CompanyDocument {
     _id: string;
-    business: string | RelatedModel | null;
     company: string | RelatedModel | null;
     project: string | RelatedModel | null;
     category: DocumentCategory;

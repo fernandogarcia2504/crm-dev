@@ -3,14 +3,16 @@ export interface RelatedModel {
     name: string;
 }
 
+export type ServiceLine = "Exposición" | "Concientización" | "Investigación y DD" | "Riesgos";
+
 export interface Opportunity {
     _id: string;
 
-    business: string | RelatedModel;
+    line?: ServiceLine;
 
     company: string | RelatedModel;
 
-    serviceTemplate: string | RelatedModel;
+    serviceTemplate?: string | RelatedModel;
 
     project: string | RelatedModel | null;
 
@@ -44,9 +46,9 @@ export interface Opportunity {
 }
 
 export interface CreateOpportunityData {
-    businessId: string;
+    line?: ServiceLine;
 
-    serviceTemplateId: string;
+    serviceTemplateId?: string;
 
     title: string;
 
@@ -71,6 +73,8 @@ export interface CreateOpportunityData {
 
 export interface UpdateOpportunityData {
     companyId?: string;
+
+    line?: ServiceLine;
 
     serviceTemplateId?: string;
 

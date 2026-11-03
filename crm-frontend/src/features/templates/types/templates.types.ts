@@ -20,7 +20,7 @@ export interface ServiceTemplateExpectedEvidence {
 
 export interface ServiceTemplate {
     _id: string;
-    business: string;
+    line?: string;
 
     name: string;
     description: string;

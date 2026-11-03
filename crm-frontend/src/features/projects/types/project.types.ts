@@ -1,26 +1,10 @@
-export type TaskStatus = "Pendiente" | "En progreso" | "Completado";
+// El proyecto en el CRM es el registro COMERCIAL del compromiso.
+// La ejecucion tecnica (scope, assets, fases, checklist) vive en
+// atalaya-platform, ligada por projectId.
 
 export interface RelatedModel {
     _id: string;
     name: string;
-}
-
-export interface ChecklistTask {
-    _id: string;
-    task: string;
-    status: TaskStatus;
-    completed: boolean;
-    completedAt: string | null;
-}
-
-export interface ProjectPhase {
-    _id: string;
-    name: string;
-    order: number;
-    status: string;
-    startedAt: string | null;
-    finishedAt: string | null;
-    checklist: ChecklistTask[];
 }
 
 export interface ProjectDeliverable {
@@ -29,28 +13,6 @@ export interface ProjectDeliverable {
     completed: boolean;
     version: number;
     deliveredAt: string | null;
-}
-
-export interface ProjectAsset {
-    _id: string;
-    name: string;
-    ip: string;
-    hostname: string;
-    type: string;
-    operatingSystem: string;
-    criticality: string;
-    comments: string;
-}
-
-export interface ProjectScope {
-    domains: string[];
-    subdomains: string[];
-    ips: string[];
-    applications: string[];
-    apis: string[];
-    exclusions: string[];
-    allowedHours: string;
-    technicalContact: string;
 }
 
 export interface ProjectTimelineEntry {
@@ -63,7 +25,7 @@ export interface ProjectTimelineEntry {
 
 export interface Project {
     _id: string;
-    business: string | RelatedModel | null;
+    line?: string;
     company: string | RelatedModel | null;
     opportunity: string | (RelatedModel & { stage?: string }) | null;
     serviceTemplate: string | (RelatedModel & { description?: string }) | null;
@@ -73,9 +35,6 @@ export interface Project {
     startDate: string | null;
     dueDate: string | null;
     deliveryDate: string | null;
-    scope: ProjectScope;
-    assets: ProjectAsset[];
-    phases: ProjectPhase[];
     deliverables: ProjectDeliverable[];
     timeline: ProjectTimelineEntry[];
     progress: number;
@@ -88,10 +47,5 @@ export interface GetProjectsResponse {
 }
 
 export interface GetProjectResponse {
-    project: Project;
-}
-
-export interface UpdateTaskStatusResponse {
-    message: string;
     project: Project;
 }

@@ -2,7 +2,10 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import app from "./app.js";
 
-const PORT = process.env.PORT || 5000;
+// CRM usa CRM_PORT (default 3000) para no chocar con la plataforma, que
+// usa PORT (4000). Así un mismo .env compartido funciona para ambos.
+// El frontend del CRM apunta a http://localhost:3000.
+const PORT = process.env.CRM_PORT || 3000;
 
 const startServer = async () => {
     try {

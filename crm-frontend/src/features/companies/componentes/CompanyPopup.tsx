@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import { Building2, X } from "lucide-react";
 
-import type { CreateCompanyData } from "../types/company.types";
+import type { CreateCompanyData, ServiceLine } from "../types/company.types";
+import { SERVICE_LINES } from "../types/company.types";
 
 interface CompanyPopupsProps {
     onClose: () => void;
@@ -19,6 +20,7 @@ export default function CompanyPopup({onClose, createCompany}: CompanyPopupsProp
         website: "",
         companySize: "",
         leadSource: "",
+        lines: [],
         notes: "",
         address: {
             country: "",
@@ -30,7 +32,7 @@ export default function CompanyPopup({onClose, createCompany}: CompanyPopupsProp
     })
 
 
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +55,18 @@ export default function CompanyPopup({onClose, createCompany}: CompanyPopupsProp
                 [name]: value
             }
         }));
+    };
+
+    const toggleLine = (line: ServiceLine) => {
+        setFormData((current) => {
+            const set = new Set(current.lines ?? []);
+            if (set.has(line)) {
+                set.delete(line);
+            } else {
+                set.add(line);
+            }
+            return { ...current, lines: [...set] };
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -85,7 +99,7 @@ export default function CompanyPopup({onClose, createCompany}: CompanyPopupsProp
     }
 
     return(
-        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#1A1A1A] flex flex-col p-4 gap-6">
+        <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="w-[27%] bg-[#15171c] flex flex-col p-4 gap-6">
 
             <button type="button" onClick={onClose}> <X size={14} /></button>
 
@@ -102,51 +116,70 @@ export default function CompanyPopup({onClose, createCompany}: CompanyPopupsProp
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Nombre de la empresa</p>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el nombre de la empresa"  />
+                <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el nombre de la empresa"  />
             </div>
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Sitio WEB</p>
-                <input type="text" name="website" value={formData.website} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el sitio web..." />
+                <input type="text" name="website" value={formData.website} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el sitio web..." />
             </div>
 
             <div className="w-full flex gap-3">
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Numero de empleados</p>
-                    <input type="text" name="companySize" value={formData.companySize} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el numero de empleados..." />
+                    <input type="text" name="companySize" value={formData.companySize} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el numero de empleados..." />
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Donde se vio</p>
-                    <input type="text" name="leadSource" value={formData.leadSource} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa donde se vio..." />
+                    <input type="text" name="leadSource" value={formData.leadSource} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa donde se vio..." />
+                </div>
+            </div>
+
+            <div className="w-full flex flex-col gap-3">
+                <p className="text-sm">Líneas de servicio</p>
+                <div className="flex flex-wrap gap-2">
+                    {SERVICE_LINES.map((line) => {
+                        const active = formData.lines?.includes(line);
+                        return (
+                            <button
+                                key={line}
+                                type="button"
+                                onClick={() => toggleLine(line)}
+                                className={`rounded-md border px-2.5 py-1 text-sm transition-colors ${active ? "border-[#5b74ff] bg-[#5b74ff]/15 text-[#e7e9ee]" : "border-[#2f343e] text-[#9aa3b2]"}`}
+                            >
+                                {line}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Notas</p>
-                <input type="text" name="notes" value={formData.notes} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa notas a considerar..." />
+                <input type="text" name="notes" value={formData.notes} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa notas a considerar..." />
             </div>
 
             <div className="w-full flex gap-3">
                 <div className="w-1/2 flex flex-col gap-3">
-                    <input type="text" name="country" value={formData.address?.country} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Pais..." />
+                    <input type="text" name="country" value={formData.address?.country} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Pais..." />
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
-                    <input type="text" name="city" value={formData.address?.city} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ciudad..." />
+                    <input type="text" name="city" value={formData.address?.city} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ciudad..." />
                 </div>
             </div>
             <div className="w-full flex gap-3">
                 <div className="w-1/2 flex flex-col gap-3">
-                    <input type="text" name="pc" value={formData.address?.pc} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="CP..." />
+                    <input type="text" name="pc" value={formData.address?.pc} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="CP..." />
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
-                    <input type="text" name="street" value={formData.address?.street} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Calle..." />
+                    <input type="text" name="street" value={formData.address?.street} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Calle..." />
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
-                    <input type="text" name="state" value={formData.address?.state} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Estado..." />
+                    <input type="text" name="state" value={formData.address?.state} onChange={handleAddressChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Estado..." />
                 </div>
             </div>
 
             <div className="flex justify-center">
-                <button className="w-[40%] bg-[#2F76D2] rounded-md px-2 py-1">Crear empresa</button>
+                <button className="w-[40%] bg-[#5b74ff] rounded-md px-2 py-1">Crear empresa</button>
             </div>
         </form>
     )

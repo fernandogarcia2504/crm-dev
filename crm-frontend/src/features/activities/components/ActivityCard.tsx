@@ -31,39 +31,39 @@ interface ActivityCardProps {
 const activityConfig = {
     Correo: {
         icon: Mail,
-        color: "#2FD260"
+        color: "#3fbf86"
     },
     Llamada: {
         icon: Phone,
-        color: "#2F76D2"
+        color: "#5b74ff"
     },
     WhatsApp: {
         icon: MessageCircle,
-        color: "#25D366"
+        color: "#3fbf86"
     },
     LinkedIn: {
         icon: Link,
-        color: "#2F9CD2"
+        color: "#4aa3e0"
     },
     Reunion: {
         icon: Calendar,
-        color: "#6B2FD2"
+        color: "#9a7cf0"
     },
     Demo: {
         icon: Presentation,
-        color: "#D2822F"
+        color: "#e0912f"
     },
     Visita: {
         icon: MapPin,
-        color: "#D22F5C"
+        color: "#e5484d"
     },
     Otro: {
         icon: MoreHorizontal,
-        color: "#767676"
+        color: "#636b78"
     }
 }
 
-export default function ActivityCard({ title, result, nextStep, date, type, isLast=false}: ActivityCardProps) {
+export default function ActivityCard({ title, nextStep, date, type, isLast=false}: ActivityCardProps) {
 
     const {icon: Icon, color} = activityConfig[type];
 
@@ -88,10 +88,10 @@ export default function ActivityCard({ title, result, nextStep, date, type, isLa
 
             <div className="flex flex-col ">
                 <p>{title}</p>
-                <p className="text-sm text-[#959595]">{nextStep}</p>
+                <p className="text-sm text-[#9aa3b2]">{nextStep}</p>
             </div>
 
-            <p className="text-sm text-[#959595]">{date}</p>
+            <p className="text-sm text-[#9aa3b2]">{date}</p>
 
         </div>
     )

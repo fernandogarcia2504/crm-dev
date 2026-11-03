@@ -14,7 +14,7 @@ export default function CompanyContactCard({contact, onEdit, onDelete}: ContactC
 
     return(
         <motion.div
-            whileHover={{ backgroundColor: "#242424" }}
+            whileHover={{ backgroundColor: "#1b1e24" }}
             transition={{ duration: 0.2 }}
             className="w-full grid grid-cols-[18%_18%_18%_26%_10%_10%] mt-8 py-2 rounded-md items-center"
         >
@@ -26,7 +26,7 @@ export default function CompanyContactCard({contact, onEdit, onDelete}: ContactC
 
             <div className="flex justify-end gap-3">
                 <button type="button" onClick={() => onEdit(contact)} className="cursor-pointer">
-                    <Pencil size={16} color="#959595" />
+                    <Pencil size={16} color="#9aa3b2" />
                 </button>
                 <button type="button" onClick={() => onDelete(contact._id)} className="cursor-pointer">
                     <Trash size={16} color="red" />

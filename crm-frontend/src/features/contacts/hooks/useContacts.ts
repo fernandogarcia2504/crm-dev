@@ -62,7 +62,7 @@ export function useContacts(companyId: string | null) {
     const updateContact = async ( contactId: string, contactData: UpdateContactData) => {
         
         if (!companyId) {
-            throw new Error( "No existe un Business seleccionado" );
+            throw new Error( "No existe una empresa seleccionada" );
         }
 
         const updatedContact = await updateContactService(
@@ -86,7 +86,7 @@ export function useContacts(companyId: string | null) {
     const deleteContact = async (contactId: string) => {
 
         if (!companyId) {
-            throw new Error( "No existe un Business seleccionado" );
+            throw new Error( "No existe una empresa seleccionada" );
         }
 
         await deleteContactService(companyId, contactId);

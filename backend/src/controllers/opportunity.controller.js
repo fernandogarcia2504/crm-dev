@@ -1,16 +1,13 @@
-import Business from "../models/business.model.js"
 import Company from "../models/company.model.js"
-import Contact from "../models/contact.model.js"
 import ServiceTemplate from "../models/servicetemplate.model.js"
 import Opportunity from "../models/opportunity.model.js"
-import Project from "../models/project.model.js"
 
 export const createOpportunity = async(req, res) => {
     try {
 
         const {companyId} = req.params;
 
-        const { title, stage, estimatedAmount, estimatedCloseDate, expectedStartDate, priority, lostReason, nextAction, probability, businessId , serviceTemplateId, notes} = req.body
+        const { title, stage, estimatedAmount, estimatedCloseDate, expectedStartDate, priority, lostReason, nextAction, probability, line, serviceTemplateId, notes} = req.body
 
         if(!title) {
             return res.status(400).json({message: "El titulo es requerido"})
@@ -22,27 +19,24 @@ export const createOpportunity = async(req, res) => {
             return res.status(409).json({message: "La oportunidad ya existe"})
         }
 
-        const business = await Business.findById(businessId);
-
-        if(!business) {
-            return res.status(409).json({message: "El negocio no existe"})
-        }
         const company = await Company.findById(companyId);
 
         if(!company) {
             return res.status(409).json({message: "El company no existe"})
         }
 
-        const serviceTemplate = await ServiceTemplate.findById(serviceTemplateId);
-
-        if(!serviceTemplate) {
-            return res.status(409).json({message: "El template no existe"})
+        // La plantilla de servicio es opcional
+        if (serviceTemplateId) {
+            const serviceTemplate = await ServiceTemplate.findById(serviceTemplateId);
+            if(!serviceTemplate) {
+                return res.status(409).json({message: "El template no existe"})
+            }
         }
 
         const opportunity = await Opportunity.create({
-            business: businessId,
             company: companyId,
-            serviceTemplate: serviceTemplateId,
+            line,
+            serviceTemplate: serviceTemplateId || undefined,
             title,
             stage,
             estimatedAmount,
@@ -90,7 +84,6 @@ export const getOpportunities = async (req, res) => {
 
         const opportunities = await Opportunity
             .find({ company: companyId })
-            .populate("business", "name")
             .populate("serviceTemplate", "name")
             .populate("project", "name")
             .sort({ createdAt: -1 });
@@ -127,7 +120,6 @@ export const getOpportunity = async (req, res) => {
 
         const opportunity = await Opportunity
             .findById(opportunityId)
-            .populate("business", "name")
             .populate("company", "name")
             .populate("contact", "fullName position")
             .populate("serviceTemplate", "name description")
@@ -171,6 +163,7 @@ export const updateOpportunity = async (req, res) => {
         const {
             companyId,
             serviceTemplateId,
+            line,
             title,
             stage,
             estimatedAmount,
@@ -223,6 +216,10 @@ export const updateOpportunity = async (req, res) => {
 
         if (title !== undefined) {
             opportunity.title = title;
+        }
+
+        if (line !== undefined) {
+            opportunity.line = line;
         }
 
         if (stage !== undefined) {
@@ -279,6 +276,78 @@ export const updateOpportunity = async (req, res) => {
 
         return res.status(500).json({
             message: "Error al actualizar la oportunidad"
+        });
+
+    }
+
+};
+
+
+// GET TODAS LAS OPORTUNIDADES (cross-empresa) — pipeline y dashboard.
+// Filtros opcionales: ?line=  ?stage=
+export const getAllOpportunities = async (req, res) => {
+
+    try {
+
+        const { line, stage } = req.query;
+
+        const filter = {};
+        if (line) filter.line = line;
+        if (stage) filter.stage = stage;
+
+        const opportunities = await Opportunity
+            .find(filter)
+            .populate("company", "name website")
+            .populate("serviceTemplate", "name")
+            .sort({ updatedAt: -1 });
+
+        return res.status(200).json({ opportunities });
+
+    } catch (error) {
+
+        console.error(error);
+
+        return res.status(500).json({
+            message: "Error al obtener las oportunidades"
+        });
+
+    }
+
+};
+
+
+// CAMBIAR SOLO LA ETAPA (drag-and-drop del pipeline)
+export const updateOpportunityStage = async (req, res) => {
+
+    try {
+
+        const { opportunityId } = req.params;
+        const { stage } = req.body;
+
+        const VALID = ["Descubrimiento", "Propuesta", "Negociacion", "Contrato", "Ganado", "Perdido"];
+
+        if (!VALID.includes(stage)) {
+            return res.status(400).json({ message: "Etapa no válida" });
+        }
+
+        const opportunity = await Opportunity.findByIdAndUpdate(
+            opportunityId,
+            { stage, lastActivityAt: new Date() },
+            { new: true }
+        ).populate("company", "name website");
+
+        if (!opportunity) {
+            return res.status(404).json({ message: "La oportunidad no existe" });
+        }
+
+        return res.status(200).json({ opportunity });
+
+    } catch (error) {
+
+        console.error(error);
+
+        return res.status(500).json({
+            message: "Error al actualizar la etapa"
         });
 
     }

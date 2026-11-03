@@ -10,7 +10,7 @@ export default function ContactCard({contact}: ContactCardProps) {
 
     return(
         <motion.div
-            whileHover={{ backgroundColor: "#242424" }}
+            whileHover={{ backgroundColor: "#1b1e24" }}
             transition={{ duration: 0.2 }}
             className="w-full grid grid-cols-[20%_20%_15%_15%_20%_10%] mt-8  py-2 rounded-md"
         >

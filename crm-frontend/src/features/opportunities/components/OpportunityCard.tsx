@@ -22,23 +22,23 @@ export default function OpportunityCard({opportunity}: OpportunityCardProps) {
 
     return(
         <motion.button 
-            className="bg-[#1A1A1A] rounded-md shadow-lg px-4 py-4 cursor-pointer"
+            className="bg-[#15171c] rounded-md shadow-lg px-4 py-4 cursor-pointer"
             whileHover={{ y: -6, scale: 1.02}}
             whileTap={{ scale: 0.98}}
             transition={{ type: "spring", stiffness: 300, damping: 20}}>
                 
             <p className="text-start">{opportunity.title}</p>
-            <div className="border-b border-b-[#777777]"></div>
+            <div className="border-b border-b-[#2a2f38]"></div>
             <div className="flex justify-between pt-2">
                 <div className="flex gap-1 items-center">
                     <LoaderCircle size={15} />
-                    <p className="text-sm text-[#959595]">{opportunity.stage}</p>
+                    <p className="text-sm text-[#9aa3b2]">{opportunity.stage}</p>
 
                 </div>
-                <p className="text-sm text-[#959595]">{opportunity.probability}% Probabilidad</p>
+                <p className="text-sm text-[#9aa3b2]">{opportunity.probability}% Probabilidad</p>
             </div>
             <div className="rounded-2xl w-full bg-slate-300 h-1 mt-2">
-                <div className="rounded-2xl h-full bg-[#2F76D2]"
+                <div className="rounded-2xl h-full bg-[#5b74ff]"
                     style={{
                         width: `${opportunity.probability}%`
                     }}
@@ -46,7 +46,7 @@ export default function OpportunityCard({opportunity}: OpportunityCardProps) {
             </div>
             <div className="flex gap-1 items-center mt-2">
                 <Banknote size={15} />
-                <p className="text-sm text-[#959595]">Fecha de inicio</p>
+                <p className="text-sm text-[#9aa3b2]">Fecha de inicio</p>
             </div>
             <p className="text-sm mt-2 text-start">{formattedDate}</p>
         </motion.button>

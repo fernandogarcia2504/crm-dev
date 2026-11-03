@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const DocumentSchema = new mongoose.Schema({
 
-    business:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Business"
-    },
-
     company:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Company"

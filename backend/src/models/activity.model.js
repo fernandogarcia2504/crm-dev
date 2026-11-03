@@ -2,12 +2,6 @@ import mongoose from "mongoose";
 
 const ActivitySchema = new mongoose.Schema ({
 
-    business: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Business",
-        required: true
-    },
-
     company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company",

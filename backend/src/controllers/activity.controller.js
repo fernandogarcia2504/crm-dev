@@ -39,7 +39,6 @@ export const createActivity = async (req, res) => {
         }
 
         const activity = await Activity.create({
-            business: opportunity.business,
             opportunity: opportunity._id,
             company: opportunity.company,
             contact: opportunity.contact,
@@ -115,16 +114,17 @@ export const createActivity = async (req, res) => {
         let project = null;
 
         if(opportunity.stage === "Ganado" && !opportunity.project) {
-            const serviceTemplate = await ServiceTemplate.findById( opportunity.serviceTemplate );
 
-            if(!serviceTemplate) {
-                return res.status(404).json({message: "El servicetemplate asociado a la oportunidad no existe"})
-            }
+            // La plantilla de servicio es opcional; si existe, se copian
+            // sus entregables al proyecto comercial.
+            const serviceTemplate = opportunity.serviceTemplate
+                ? await ServiceTemplate.findById(opportunity.serviceTemplate)
+                : null;
 
             project = await Project.create({
 
                 // Datos provenientes de Opportunity
-                business: opportunity.business,
+                line: opportunity.line,
 
                 company: opportunity.company,
 
@@ -139,47 +139,13 @@ export const createActivity = async (req, res) => {
                 // Project comienza en Planeacion
                 status: "Planeacion",
 
-                // Datos propios del Project
-                scope: {
-                    domains: [],
-                    subdomains: [],
-                    ips: [],
-                    applications: [],
-                    apis: [],
-                    exclusions: [],
-                    allowedHours: "",
-                    technicalContact: ""
-                },
+                // El scope tecnico, los assets y las fases/checklist de
+                // ejecucion NO se crean aqui: esa operacion vive en
+                // atalaya-platform, que sembrara su registro de ejecucion
+                // a partir del ServiceTemplate usando este projectId.
 
-                assets: [],
-
-                // Copiar fases del ServiceTemplate
-                phases: serviceTemplate.phases.map(phase => ({
-
-                    name: phase.name,
-
-                    order: phase.order,
-
-                    status: "Pendiente",
-
-                    startedAt: null,
-
-                    finishedAt: null,
-
-                    checklist: phase.checklist.map(task => ({
-
-                        task,
-
-                        completed: false,
-
-                        completedAt: null
-
-                    }))
-
-                })),
-
-                // Copiar deliverables del ServiceTemplate
-                deliverables: serviceTemplate.deliverables.map(
+                // Copiar deliverables del ServiceTemplate (compromiso comercial)
+                deliverables: (serviceTemplate?.deliverables || []).map(
                     deliverable => ({
 
                         name: deliverable.name,
@@ -283,7 +249,6 @@ export const getActivity = async (req, res) => {
 
         const activity = await Activity
             .findById(activityId)
-            .populate("business", "name")
             .populate("opportunity", "title stage")
             .populate("company", "name")
             .populate("contact", "fullName position");
@@ -311,6 +276,42 @@ export const getActivity = async (req, res) => {
 
         return res.status(500).json({
             message: "Error al obtener la actividad"
+        });
+
+    }
+
+};
+
+
+// GET TODAS LAS ACTIVIDADES (cross-empresa) — dashboard y próximas.
+// Filtro opcional: ?upcoming=1 (solo con scheduledDate en el futuro)
+export const getAllActivities = async (req, res) => {
+
+    try {
+
+        const { upcoming } = req.query;
+
+        const filter = {};
+        if (upcoming) {
+            filter.scheduledDate = { $gte: new Date() };
+        }
+
+        const activities = await Activity
+            .find(filter)
+            .populate("company", "name")
+            .populate("contact", "fullName")
+            .populate("opportunity", "title")
+            .sort(upcoming ? { scheduledDate: 1 } : { date: -1 })
+            .limit(200);
+
+        return res.status(200).json({ activities });
+
+    } catch (error) {
+
+        console.error(error);
+
+        return res.status(500).json({
+            message: "Error al obtener las actividades"
         });
 
     }

@@ -34,15 +34,15 @@ export default function DocumentsPage() {
             </div>
 
             <div className="w-full grid grid-cols-[20%_10%_20%_40%_10%] pt-12">
-                <p className="text-[#959595] ">Nombre del archivo</p>
-                <p className="text-[#959595] ">Tamaño</p>
-                <p className="text-[#959595] ">Categoría</p>
-                <p className="text-[#959595] ">Notas</p>
-                <p className="text-[#959595] ">Eliminar</p>
+                <p className="text-[#9aa3b2] ">Nombre del archivo</p>
+                <p className="text-[#9aa3b2] ">Tamaño</p>
+                <p className="text-[#9aa3b2] ">Categoría</p>
+                <p className="text-[#9aa3b2] ">Notas</p>
+                <p className="text-[#9aa3b2] ">Eliminar</p>
             </div>
 
             {loading && (
-                <p className="mt-8 text-[#959595]">Cargando documentos...</p>
+                <p className="mt-8 text-[#9aa3b2]">Cargando documentos...</p>
             )}
 
             {error && (
@@ -54,7 +54,7 @@ export default function DocumentsPage() {
             )}
 
             {!loading && !error && documents.length === 0 && (
-                <p className="mt-8 text-[#959595]">No hay documentos registrados para esta empresa.</p>
+                <p className="mt-8 text-[#9aa3b2]">No hay documentos registrados para esta empresa.</p>
             )}
 
             {!loading && !error && documents.map((document) => (

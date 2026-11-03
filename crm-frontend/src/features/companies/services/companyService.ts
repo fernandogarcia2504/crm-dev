@@ -1,120 +1,54 @@
-import type { Company, CreateCompanyData, UpdateCompanyData, GetCompaniesResponse, GetCompanyResponse, UpdateCompanyResponse, DeleteCompanyResponse, CreateCompanyResponse } from "../types/company.types";
+import type { Company, CreateCompanyData, UpdateCompanyData, GetCompaniesResponse, GetCompanyResponse, CreateCompanyResponse, UpdateCompanyResponse, DeleteCompanyResponse } from "../types/company.types";
 
 const API_URL = "http://localhost:3000/api";
 
-export const getCompanies = async (businessId: string): Promise<Company[]> => {
+const authHeaders = () => ({
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+});
 
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${API_URL}/companies/${businessId}`, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    })
-
-    if(!response.ok){
-        throw new Error(
-            "Error al obtener las empresas"
-        );
-    }
-
+export const getCompanies = async (): Promise<Company[]> => {
+    const response = await fetch(`${API_URL}/companies`, { headers: authHeaders() });
+    if (!response.ok) throw new Error("Error al obtener las empresas");
     const data: GetCompaniesResponse = await response.json();
+    return data.companies;
+};
 
-    return data.companies
-}
-
-export const getCompany = async (businessId: string, companyId: string): Promise<Company> => {
-
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${API_URL}/companies/${businessId}/${companyId}`, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    })
-
-    if (!response.ok) {
-        throw new Error(
-            "Error al obtener la empresa"
-        );
-    }
-
+export const getCompany = async (companyId: string): Promise<Company> => {
+    const response = await fetch(`${API_URL}/companies/${companyId}`, { headers: authHeaders() });
+    if (!response.ok) throw new Error("Error al obtener la empresa");
     const data: GetCompanyResponse = await response.json();
-
-    return data.company;
-
-}
-
-export const createCompany = async (businessId: string, companyData: CreateCompanyData): Promise<Company> => {
-
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${API_URL}/companies/${businessId}`, {
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-            "Authorization": `Bearer ${token}`
-        },
-
-        body: JSON.stringify(companyData)
-    })
-
-    const data: CreateCompanyResponse = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            data.message || "Error al crear la empresa"
-        );
-    }
-
-    return data.company;
-}
-
-export const updateCompany = async (businessId: string, companyId: string, companyData: UpdateCompanyData ): Promise<Company> => {
-
-    const token = localStorage.getItem("token");
-
-    const response = await fetch( `${API_URL}/companies/${businessId}/${companyId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-
-            body: JSON.stringify(companyData)
-        }
-    );
-
-    const data: UpdateCompanyResponse = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            data.message || "Error al actualizar la empresa"
-        );
-    }
-
     return data.company;
 };
 
-export const deleteCompany = async ( businessId: string, companyId: string ): Promise<string> => {
+export const createCompany = async (companyData: CreateCompanyData): Promise<Company> => {
+    const response = await fetch(`${API_URL}/companies`, {
+        method: "POST",
+        headers: authHeaders(),
+        body: JSON.stringify(companyData)
+    });
+    const data: CreateCompanyResponse = await response.json();
+    if (!response.ok) throw new Error(data.message || "Error al crear la empresa");
+    return data.company;
+};
 
-    const token = localStorage.getItem("token");
+export const updateCompany = async (companyId: string, companyData: UpdateCompanyData): Promise<Company> => {
+    const response = await fetch(`${API_URL}/companies/${companyId}`, {
+        method: "PUT",
+        headers: authHeaders(),
+        body: JSON.stringify(companyData)
+    });
+    const data: UpdateCompanyResponse = await response.json();
+    if (!response.ok) throw new Error(data.message || "Error al actualizar la empresa");
+    return data.company;
+};
 
-    const response = await fetch(`${API_URL}/companies/${businessId}/${companyId}`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        }
-    );
-
+export const deleteCompany = async (companyId: string): Promise<string> => {
+    const response = await fetch(`${API_URL}/companies/${companyId}`, {
+        method: "DELETE",
+        headers: authHeaders()
+    });
     const data: DeleteCompanyResponse = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            data.message || "Error al eliminar la empresa"
-        );
-    }
-
+    if (!response.ok) throw new Error(data.message || "Error al eliminar la empresa");
     return data.message;
 };

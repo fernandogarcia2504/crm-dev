@@ -134,7 +134,6 @@ export const uploadDocument = async (req, res) => {
         );
 
         const document = await Document.create({
-            business: company.business,
             company: companyId,
             category: category || "Otro",
             fileName: safeName,

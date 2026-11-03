@@ -10,10 +10,8 @@ import { useCompanies } from "../../companies/hooks/useCompanies"
 
 export default function ContactsPage() {
 
-    const businessId = localStorage.getItem("businessId")
-
-    const {contacts, loading, error, createContact} = useAllContacts(businessId);
-    const { companies, loading: loadingCompanies} = useCompanies(businessId)
+    const {contacts, loading, error, createContact} = useAllContacts();
+    const { companies, loading: loadingCompanies} = useCompanies()
     const [isOpenPopup, setIsOpenPopup] = useState(false);
 
     return(
@@ -23,16 +21,16 @@ export default function ContactsPage() {
             </div>
 
             <div className="w-full grid grid-cols-[20%_20%_15%_15%_20%_10%] pt-8">
-                <p className="text-[#959595]">Nombre</p>
-                <p className="text-[#959595]">Puesto</p>
-                <p className="text-[#959595]">Teléfono</p>
-                <p className="text-[#959595]">Empresa</p>
-                <p className="text-[#959595]">Correo electrónico</p>
-                <p className="text-[#959595] text-right">Principal</p>
+                <p className="text-[#9aa3b2]">Nombre</p>
+                <p className="text-[#9aa3b2]">Puesto</p>
+                <p className="text-[#9aa3b2]">Teléfono</p>
+                <p className="text-[#9aa3b2]">Empresa</p>
+                <p className="text-[#9aa3b2]">Correo electrónico</p>
+                <p className="text-[#9aa3b2] text-right">Principal</p>
             </div>
 
             {loading && (
-                <p className="mt-8 text-[#959595]">
+                <p className="mt-8 text-[#9aa3b2]">
                     Cargando contactos...
                 </p>
             )}

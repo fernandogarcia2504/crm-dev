@@ -1,11 +1,15 @@
+export type ServiceLine = "Exposición" | "Concientización" | "Investigación y DD" | "Riesgos";
+
+export const SERVICE_LINES: ServiceLine[] = ["Exposición", "Concientización", "Investigación y DD", "Riesgos"];
+
 export interface Company {
     _id: string;
 
-    business: string;
     name: string;
     website: string;
     companySize: string;
-    leadSource: string;
+    leadSource?: string;
+    lines?: ServiceLine[];
     status: string;
     notes?: string;
     address?: {
@@ -21,7 +25,8 @@ export interface CreateCompanyData {
     name: string;
     website: string;
     companySize: string;
-    leadSource: string;
+    leadSource?: string;
+    lines?: ServiceLine[];
     status?: string;
     notes?: string;
     address?: {
@@ -38,6 +43,7 @@ export interface UpdateCompanyData {
     website?: string;
     companySize?: string;
     leadSource?: string;
+    lines?: ServiceLine[];
     status?: string;
     notes?: string;
     address?: {

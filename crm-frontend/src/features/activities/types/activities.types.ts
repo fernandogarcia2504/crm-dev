@@ -25,8 +25,6 @@ export interface OpportunityReference {
 
 export interface Activity {
     _id: string;
-
-    business: string | RelatedModel;
     company: string | RelatedModel;
     contact: string | ContactReference | null;
     opportunity: string | OpportunityReference | null;

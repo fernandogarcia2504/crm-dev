@@ -60,21 +60,21 @@ export default function OpportunityActivity({ opportunity, onOpportunityUpdate }
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full flex flex-col pb-12">
             <p className="px-3 pb-2">Secuencia de actividades para: {opportunity.title}</p>
 
-            <div className="w-full flex justify-between bg-[#212121] rounded-md">
+            <div className="w-full flex justify-between bg-[#1b1e24] rounded-md">
                 <div className="w-[60%] rounded-md flex flex-col gap-3  p-3 ">
                     <div className="flex gap-2 items-center">
-                        <p className="text-sm text-[#959595] ">Etapa: </p>
+                        <p className="text-sm text-[#9aa3b2] ">Etapa: </p>
                         <p className="text-sm ">{opportunity.stage}</p>
                     </div>
 
                     <div className="flex gap-8 items-center">
-                        <p className="text-sm text-[#959595]">{activities.length} Actividades registradas</p>
-                        <p className="text-sm text-[#959595]">
+                        <p className="text-sm text-[#9aa3b2]">{activities.length} Actividades registradas</p>
+                        <p className="text-sm text-[#9aa3b2]">
                             {firstActivityDate
                                 ? `Acercamiento inicial ${formatDateTime(firstActivityDate)}`
                                 : "Sin actividades registradas"}
                         </p>
-                        <p className="text-sm text-[#959595]">
+                        <p className="text-sm text-[#9aa3b2]">
                             {opportunity.project ? "1 Proyecto asociado" : "Sin proyecto asociado"}
                         </p>
                     </div>
@@ -85,17 +85,17 @@ export default function OpportunityActivity({ opportunity, onOpportunityUpdate }
             </div>
 
             {newProject && (
-                <div className="rounded-md bg-[#212121] p-3 mt-4 mx-3">
-                    <p className="text-sm text-[#959595]">
+                <div className="rounded-md bg-[#1b1e24] p-3 mt-4 mx-3">
+                    <p className="text-sm text-[#9aa3b2]">
                         Se creó automáticamente el proyecto
-                        <span className="text-[#ECECEC]"> {newProject.name}</span>
+                        <span className="text-[#e7e9ee]"> {newProject.name}</span>
                         {" "}a partir de esta oportunidad.
                     </p>
                 </div>
             )}
 
             {loading && (
-                <p className="mt-8 px-3 text-[#959595]">Cargando actividades...</p>
+                <p className="mt-8 px-3 text-[#9aa3b2]">Cargando actividades...</p>
             )}
 
             {error && (
@@ -103,7 +103,7 @@ export default function OpportunityActivity({ opportunity, onOpportunityUpdate }
             )}
 
             {!loading && !error && activities.length === 0 && (
-                <p className="mt-8 px-3 text-[#959595]">No hay actividades registradas para esta oportunidad.</p>
+                <p className="mt-8 px-3 text-[#9aa3b2]">No hay actividades registradas para esta oportunidad.</p>
             )}
 
             <div className="w-full flex flex-col gap-8 mt-8">

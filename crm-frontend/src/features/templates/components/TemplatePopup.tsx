@@ -233,7 +233,7 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
         <form
             onSubmit={handleSubmit}
             onClick={(e) => e.stopPropagation()}
-            className="w-[38%] max-h-[85vh] overflow-y-auto bg-[#1A1A1A] flex flex-col p-4 gap-6"
+            className="w-[38%] max-h-[85vh] overflow-y-auto bg-[#15171c] flex flex-col p-4 gap-6"
         >
             <button onClick={onClose} type="button"><X size={14} /></button>
 
@@ -248,18 +248,18 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Nombre</p>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa el nombre del template..." />
+                <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa el nombre del template..." />
             </div>
 
             <div className="w-full flex flex-col gap-3">
                 <p className="text-sm">Descripción</p>
-                <textarea name="description" value={formData.description} onChange={handleChange} className="w-full h-20 rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm" placeholder="Ingresa una descripción..." />
+                <textarea name="description" value={formData.description} onChange={handleChange} className="w-full h-20 rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm" placeholder="Ingresa una descripción..." />
             </div>
 
             <div className="w-full flex gap-3 items-center">
                 <div className="w-1/2 flex flex-col gap-3">
                     <p className="text-sm">Duración estimada (días)</p>
-                    <input type="number" name="estimatedDuration" value={formData.estimatedDuration} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#212121]" />
+                    <input type="number" name="estimatedDuration" value={formData.estimatedDuration} onChange={handleChange} className="w-full rounded-md px-3 py-1 bg-[#1b1e24]" />
                 </div>
                 <div className="w-1/2 flex gap-2 items-center pt-6">
                     <input type="checkbox" name="active" checked={formData.active} onChange={handleChange} />
@@ -271,27 +271,27 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
             <div className="w-full flex flex-col gap-3">
                 <div className="flex justify-between items-center">
                     <p className="text-sm">Fases</p>
-                    <button type="button" onClick={addPhase} className="flex items-center gap-1 text-sm text-[#3550CB]">
+                    <button type="button" onClick={addPhase} className="flex items-center gap-1 text-sm text-[#4a5fe0]">
                         <Plus size={14} /> Agregar fase
                     </button>
                 </div>
 
                 {formData.phases.map((phase, phaseIndex) => (
-                    <div key={phaseIndex} className="w-full flex flex-col gap-2 bg-[#212121] rounded-md p-3">
+                    <div key={phaseIndex} className="w-full flex flex-col gap-2 bg-[#1b1e24] rounded-md p-3">
                         <div className="flex justify-between items-center">
-                            <p className="text-sm text-[#959595]">Fase {phase.order}</p>
+                            <p className="text-sm text-[#9aa3b2]">Fase {phase.order}</p>
                             <button type="button" onClick={() => removePhase(phaseIndex)}>
                                 <X size={12} />
                             </button>
                         </div>
 
-                        <input type="text" value={phase.name} onChange={(e) => updatePhaseField(phaseIndex, "name", e.target.value)} placeholder="Nombre de la fase (ej. Inicio)" className="w-full rounded-md px-3 py-1 bg-[#1A1A1A] placeholder:text-sm text-sm" />
+                        <input type="text" value={phase.name} onChange={(e) => updatePhaseField(phaseIndex, "name", e.target.value)} placeholder="Nombre de la fase (ej. Inicio)" className="w-full rounded-md px-3 py-1 bg-[#15171c] placeholder:text-sm text-sm" />
 
-                        <input type="text" value={phase.description} onChange={(e) => updatePhaseField(phaseIndex, "description", e.target.value)} placeholder="Descripción de la fase" className="w-full rounded-md px-3 py-1 bg-[#1A1A1A] placeholder:text-sm text-sm" />
+                        <input type="text" value={phase.description} onChange={(e) => updatePhaseField(phaseIndex, "description", e.target.value)} placeholder="Descripción de la fase" className="w-full rounded-md px-3 py-1 bg-[#15171c] placeholder:text-sm text-sm" />
 
                         <div className="flex flex-col gap-1">
                             {phase.checklist.map((task, taskIndex) => (
-                                <div key={taskIndex} className="w-full flex justify-between items-center bg-[#1A1A1A] rounded-md px-3 py-1">
+                                <div key={taskIndex} className="w-full flex justify-between items-center bg-[#15171c] rounded-md px-3 py-1">
                                     <p className="text-sm">{task}</p>
                                     <button type="button" onClick={() => removeChecklistTask(phaseIndex, taskIndex)}>
                                         <X size={12} />
@@ -318,9 +318,9 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
                                     }
                                 }}
                                 placeholder="Agregar tarea..."
-                                className="w-full rounded-md px-3 py-1 bg-[#1A1A1A] placeholder:text-sm text-sm"
+                                className="w-full rounded-md px-3 py-1 bg-[#15171c] placeholder:text-sm text-sm"
                             />
-                            <button type="button" onClick={() => addChecklistTask(phaseIndex)} className="text-[#3550CB]">
+                            <button type="button" onClick={() => addChecklistTask(phaseIndex)} className="text-[#4a5fe0]">
                                 <Plus size={16} />
                             </button>
                         </div>
@@ -334,8 +334,8 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
 
                 <div className="flex flex-col gap-1">
                     {formData.deliverables.map((deliverable, index) => (
-                        <div key={index} className="w-full flex justify-between items-center bg-[#212121] rounded-md px-3 py-1">
-                            <p className="text-sm">{deliverable.name} {deliverable.required && <span className="text-[#959595]">(requerido)</span>}</p>
+                        <div key={index} className="w-full flex justify-between items-center bg-[#1b1e24] rounded-md px-3 py-1">
+                            <p className="text-sm">{deliverable.name} {deliverable.required && <span className="text-[#9aa3b2]">(requerido)</span>}</p>
                             <button type="button" onClick={() => removeDeliverable(index)}>
                                 <X size={12} />
                             </button>
@@ -344,12 +344,12 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
                 </div>
 
                 <div className="flex gap-2 items-center">
-                    <input type="text" value={deliverableDraft.name} onChange={(e) => setDeliverableDraft((d) => ({ ...d, name: e.target.value }))} placeholder="Nombre del entregable..." className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm text-sm" />
+                    <input type="text" value={deliverableDraft.name} onChange={(e) => setDeliverableDraft((d) => ({ ...d, name: e.target.value }))} placeholder="Nombre del entregable..." className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm text-sm" />
                     <label className="flex items-center gap-1 text-sm whitespace-nowrap">
                         <input type="checkbox" checked={deliverableDraft.required} onChange={(e) => setDeliverableDraft((d) => ({ ...d, required: e.target.checked }))} />
                         Requerido
                     </label>
-                    <button type="button" onClick={addDeliverable} className="text-[#3550CB]">
+                    <button type="button" onClick={addDeliverable} className="text-[#4a5fe0]">
                         <Plus size={16} />
                     </button>
                 </div>
@@ -361,8 +361,8 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
 
                 <div className="flex flex-col gap-1">
                     {formData.expectedEvidence.map((evidence, index) => (
-                        <div key={index} className="w-full flex justify-between items-center bg-[#212121] rounded-md px-3 py-1">
-                            <p className="text-sm">{evidence.name} {evidence.required && <span className="text-[#959595]">(requerido)</span>}</p>
+                        <div key={index} className="w-full flex justify-between items-center bg-[#1b1e24] rounded-md px-3 py-1">
+                            <p className="text-sm">{evidence.name} {evidence.required && <span className="text-[#9aa3b2]">(requerido)</span>}</p>
                             <button type="button" onClick={() => removeEvidence(index)}>
                                 <X size={12} />
                             </button>
@@ -371,12 +371,12 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
                 </div>
 
                 <div className="flex gap-2 items-center">
-                    <input type="text" value={evidenceDraft.name} onChange={(e) => setEvidenceDraft((d) => ({ ...d, name: e.target.value }))} placeholder="Nombre de la evidencia..." className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm text-sm" />
+                    <input type="text" value={evidenceDraft.name} onChange={(e) => setEvidenceDraft((d) => ({ ...d, name: e.target.value }))} placeholder="Nombre de la evidencia..." className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm text-sm" />
                     <label className="flex items-center gap-1 text-sm whitespace-nowrap">
                         <input type="checkbox" checked={evidenceDraft.required} onChange={(e) => setEvidenceDraft((d) => ({ ...d, required: e.target.checked }))} />
                         Requerido
                     </label>
-                    <button type="button" onClick={addEvidence} className="text-[#3550CB]">
+                    <button type="button" onClick={addEvidence} className="text-[#4a5fe0]">
                         <Plus size={16} />
                     </button>
                 </div>
@@ -388,7 +388,7 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
 
                 <div className="flex flex-wrap gap-2">
                     {formData.projectStructure.map((item, index) => (
-                        <div key={index} className="flex items-center gap-1 bg-[#212121] rounded-md px-3 py-1">
+                        <div key={index} className="flex items-center gap-1 bg-[#1b1e24] rounded-md px-3 py-1">
                             <p className="text-sm">{item}</p>
                             <button type="button" onClick={() => removeStructureItem(index)}>
                                 <X size={12} />
@@ -409,9 +409,9 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
                             }
                         }}
                         placeholder="Agregar carpeta/sección..."
-                        className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm text-sm"
+                        className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm text-sm"
                     />
-                    <button type="button" onClick={addStructureItem} className="text-[#3550CB]">
+                    <button type="button" onClick={addStructureItem} className="text-[#4a5fe0]">
                         <Plus size={16} />
                     </button>
                 </div>
@@ -423,7 +423,7 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
 
                 <div className="flex flex-wrap gap-2">
                     {formData.kpis.map((kpi, index) => (
-                        <div key={index} className="flex items-center gap-1 bg-[#212121] rounded-md px-3 py-1">
+                        <div key={index} className="flex items-center gap-1 bg-[#1b1e24] rounded-md px-3 py-1">
                             <p className="text-sm">{kpi}</p>
                             <button type="button" onClick={() => removeKpi(index)}>
                                 <X size={12} />
@@ -444,16 +444,16 @@ export default function TemplatePopup({ onClose, createTemplate }: TemplatePopup
                             }
                         }}
                         placeholder="Agregar KPI..."
-                        className="w-full rounded-md px-3 py-1 bg-[#212121] placeholder:text-sm text-sm"
+                        className="w-full rounded-md px-3 py-1 bg-[#1b1e24] placeholder:text-sm text-sm"
                     />
-                    <button type="button" onClick={addKpi} className="text-[#3550CB]">
+                    <button type="button" onClick={addKpi} className="text-[#4a5fe0]">
                         <Plus size={16} />
                     </button>
                 </div>
             </div>
 
             <div className="flex justify-center">
-                <button type="submit" disabled={loading} className="w-[45%] bg-[#2F76D2] rounded-md px-2 py-1">
+                <button type="submit" disabled={loading} className="w-[45%] bg-[#5b74ff] rounded-md px-2 py-1">
                     {loading ? "Creando..." : "Crear template"}
                 </button>
             </div>
